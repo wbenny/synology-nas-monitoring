@@ -3,6 +3,8 @@ Synology NAS monitoring
 
 Configuration files and tutorial on how to monitor your Synology NAS using SNMP, Telegraf, InfluxDB and Grafana.
 
+![Dashboard](images/dashboard.png)
+
 ### Motivation
 
 There are [already few](https://github.com/alhazmy13/Synology-NAS-monitoring)
