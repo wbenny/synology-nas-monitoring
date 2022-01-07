@@ -37,7 +37,8 @@ In DSM:
 * Download [`telegraf`](https://hub.docker.com/_/telegraf),
            [`influxdb`](https://hub.docker.com/_/influxdb) and
            [`grafana/grafana`](https://hub.docker.com/r/grafana/grafana)
-           from the Docker registry
+           images from the Docker registry
+    * Download `latest` tag for all images
 * Copy `telegraf` and `influxdb` folders from this repository into the `docker` shared folder on the NAS
 
 #### Create `influxdb` container
