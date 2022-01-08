@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+
+  influxdb:
+    image: influxdb:2.1
+    restart: always
+    ports:
+      - 8086:8086
+    volumes: 
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME:-influx}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD:-supersecret}
+      - DOCKER_INFLUXDB_INIT_ORG=NAS
+      - DOCKER_INFLUXDB_INIT_BUCKET=Telegraf
+
+  telegraf:
+    image: telegraf:1.21
+    restart: always
+    volumes: 
+      - ./telegraf/etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf/mibs:/mibs:ro 
+  
+  grafana:
+    image: grafana/grafana:8.3.3
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  influxdb-data:
+  grafana-data:
+
