@@ -25,7 +25,7 @@
 # Configuration for telegraf agent
 [agent]
   ## Default data collection interval for all inputs
-  interval = "10s"
+  interval = "15s"
   ## Rounds collection interval to 'interval'
   ## ie, if interval="10s" then always collect on :00, :10, :20, etc.
   round_interval = true
@@ -110,16 +110,16 @@
 #   ## Multiple URLs can be specified for a single cluster, only ONE of the
 #   ## urls will be written to each interval.
 #   ##   ex: urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
-    urls = ["http://${NAS_HOSTNAME}:8086"]
+    urls = ["http://influxdb:8086"]
 #
 #   ## Token for authentication.
-    token = "${INFLUXDB_API_TOKEN}"
+    token = "FjkxEPKWJ4hm4oWS2ZurQVGa0fBczCaTXlVBmHTGCuuu0J1wxRPhdQWAAviIX_8RirgFHBq4ZGeckITaK1Wwvw=="
 #
 #   ## Organization is the name of the organization you wish to write to; must exist.
-    organization = "${INFLUXDB_ORG}"
+    organization = "NAS"
 #
 #   ## Destination bucket to write into.
-    bucket = "${INFLUXDB_BUCKET}"
+    bucket = "telegraf"
 #
 #   ## The value of this tag will be used to determine the bucket.  If this
 #   ## tag is not set the 'bucket' option is used as the default.
@@ -167,7 +167,9 @@
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
+    version = 2
+    community = "public"
     path = ["/mibs"]
 
     name = "system"
@@ -193,14 +195,13 @@
         name = "sysUpTime"
         oid = "SNMPv2-MIB::sysUpTime.0"
 
-
 #
 # UCD-SNMP-MIB::systemStats
 # -------------------------
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
     path = ["/mibs"]
 
     name = "systemStats"
@@ -321,7 +322,7 @@
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
     path = ["/mibs"]
 
     name = "memory"
@@ -376,7 +377,7 @@
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
     path = ["/mibs"]
 
     name = "hrSystem"
@@ -415,7 +416,7 @@
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
     path = ["/mibs"]
 
     name = "synoSystem"
@@ -462,7 +463,7 @@
 #
 
 [[inputs.snmp]]
-    agents = ["${NAS_HOSTNAME}"]
+    agents = ["192.168.22.2"]
     path = ["/mibs"]
 
     #
@@ -608,4 +609,3 @@
         [[inputs.snmp.table.field]]
             oid = "SYNOLOGY-STORAGEIO-MIB::storageIODevice"
             is_tag = true
-
