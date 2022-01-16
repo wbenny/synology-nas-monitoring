@@ -1,1 +1,2 @@
-influxdb/var/lib/influxdb2/influxd.*
+data
+.env
