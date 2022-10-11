@@ -93,6 +93,7 @@ Default credentials are `admin`:`admin`. After login, it will ask you for a new 
 **After logging into Grafana web interface:**
 * Go to `Configuration` -> `Data sources`
     * `Add data source` -> `InfluxDB`
+    * Check `Default`
     * `Query Language` -> `Flux`
     * `HTTP`
         * `URL` -> `http://your-nas:8086`
