@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+
+  influxdb:
+    image: influxdb:2.1
+    restart: always
+    ports:
+      - 8086:8086
+    volumes: 
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME:-influx}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD:-supersecret}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+
+  telegraf:
+    image: telegraf:1.21
+    restart: always
+    # Network mode must be on host or snmp timeout will occur in telegraf
+    # Possible related bug: https://github.com/influxdata/telegraf/issues/3320
+    network_mode: "host"
+    volumes: 
+      - ./telegraf/etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf/mibs:/mibs:ro 
+    environment:
+      - NAS_HOSTNAME=${NAS_HOSTNAME} 
+      - INFLUXDB_API_TOKEN=${INFLUXDB_API_TOKEN} 
+      - INFLUXDB_ORG=${INFLUXDB_ORG} 
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET} 
+  
+  grafana:
+    image: grafana/grafana:8.3.3
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  influxdb-data:
+  grafana-data:
+
